@@ -3,6 +3,7 @@
   brew install composer
   composer self-update
 2.安装pecl方便安装php扩展
+  关闭系统保护 csrutil 重启按住command+r 进入恢复系统的命令行。然后输入csrutil disable 重启查看状态 csrutil status
   curl -O https://pear.php.net/go-pear.phar
   sudo php -d detect_unicode=0 go-pear.phar
   输入 1，将安装根目录修改为 /usr/local/pear；
