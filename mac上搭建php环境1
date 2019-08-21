@@ -1,0 +1,48 @@
+最近经常换工作，在mac上搭建了好几种php的环境了。记一下长记性
+如果不是着急开发不要使用自带的php真的是一团糟,推荐brew安装。拿到电脑
+ 1.先安装xcode-select install
+ 2.安装brew
+ 3.检查/usr下存不存在include.如果不存在进入cd /Library/Developer/CommandLineTools/Packages/  open macOS_SDK_headers_for_*.pkg
+    应该存在了
+ 4.配置自带php环境 
+      4.1 配置代码目录的访问权限
+          cd /etc/apache2/users 
+          sudo vim allen.conf(名字随便)
+            <Directory "/Users/allen/Codes/">
+              Options Indexes MultiViews
+              AllowOverride All
+              Order allow,deny
+              Allow from all
+            </Directory>
+      4.2 修改配置打开php 去掉#
+          sudo vim /etc/apache2/httpd.conf
+            LoadModulephp5_module libexec/apache2/libphp7.so
+            LoadModule userdir_module libexec/apache2/mod_userdir.so
+            Include /private/etc/apache2/extra/httpd-userdir.conf
+            Include /private/etc/apache2/extra/httpd-vhost.conf
+            
+            (修改 httpd.conf)
+              <Directory />
+                  AllowOverride none
+                  Require all denied
+              </Directory>
+            修改为
+              <Directory />
+                  AllowOverride none
+                  Require all granted
+              </Directory>
+            
+          sudo vim /etc/apache2/extra/httpd-userdir.conf
+            Include /private/etc/apache2/users/*.conf
+          sudo vim /etc/apache2/extra/httpd-vhost.conf
+            listen 82
+            <VirtualHost *:82>
+                ServerAdmin test
+                DocumentRoot "/Users/allen/Codes/test/public"
+                ServerName 192.168.0.1(地址根据自己的ip)
+                ErrorLog "/private/var/log/apache2/dummy-host2.example.com-error_log"
+                CustomLog "/private/var/log/apache2/dummy-host2.example.com-access_log" common
+            </VirtualHost>
+
+
+          
