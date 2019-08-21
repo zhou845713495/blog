@@ -1,0 +1,25 @@
+上面搭建完成php环境开始入坑:
+1.安装composer(使用brew,不要问为什么,官方方式安装会有权限问题)
+  brew install composer
+  composer self-update
+2.安装pecl方便安装php扩展
+  curl -O https://pear.php.net/go-pear.phar
+  sudo php -d detect_unicode=0 go-pear.phar
+  输入 1，将安装根目录修改为 /usr/local/pear；
+  输入 4，将命令安装到 /usr/local/bin 目录；
+  其它选项默认即可，一路回车。
+  查看版本 pear version
+  先更新 sudo pecl channel-update pecl.php.net
+  安装pcre brew install pcre
+  安装autoconf brew install autoconf
+  警告:安装扩展pecl install redis。不要陷入死胡同，无法下载包文件就去http://pecl.php.net下载包。
+      curl 'http://pecl.php.net/get/redis-1.0.0.tgz' -o redis-1.0.0.tgz
+      pecl install redis-1.0.0.tgz
+      
+  其他小错误忘记了。遇到自行百度应该不大，最后就是把安装好的扩展加入php.ini。
+      sudo /etc/php.ini.default /etc/php.ini
+      
+      echo "extension = redis.so" >> /etc/php.ini
+      
+      php -m查看
+      (完)
